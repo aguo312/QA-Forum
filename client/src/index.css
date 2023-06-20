@@ -1,3 +1,22 @@
 body {
   margin: 0;
 }
+
+#root {
+  text-align: center;
+}
+
+#welcomeText {
+  padding-top: 10%;
+  padding-bottom: 5%;
+  font-size: xx-large;
+}
+
+.welcomeButton {
+  background-color: #165a92;
+  border-radius: 5%;
+  color: white;
+  font-size: small;
+  margin: 1%;
+  padding: 1%;
+}

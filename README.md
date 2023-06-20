@@ -4,4 +4,4 @@ client dependencies
 axios
 
 server dependencies
-body-parse, cors, express, mongoose, nodemon
+body-parse, connect-mongo, cors, express, express-session, mongoose, nodemon
