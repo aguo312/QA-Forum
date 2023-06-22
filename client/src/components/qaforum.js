@@ -19,6 +19,7 @@ export default class QAForum extends React.Component {
     this.handleClickRegister = this.handleClickRegister.bind(this);
     this.handleClickBack = this.handleClickBack.bind(this);
     this.handleClickGuest = this.handleClickGuest.bind(this);
+    this.handleErrorMsg = this.handleErrorMsg.bind(this);
   }
 
   componentDidMount() {}

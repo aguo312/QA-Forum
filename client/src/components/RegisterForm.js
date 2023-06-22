@@ -114,7 +114,7 @@ export default class RegisterForm extends React.Component {
         value: true,
         errors: errorMessages,
       };
-      //   this.props.onFormError(error);
+      this.props.onFormError(error);
     } else {
       console.log("pass");
     }
