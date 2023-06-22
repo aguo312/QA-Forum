@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Welcome from "./Welcome";
+import RegisterForm from "./RegisterForm";
 
 axios.defaults.withCredentials = true;
 
@@ -12,6 +13,7 @@ export default class QAForum extends React.Component {
       showLoginForm: false,
       showRegisterForm: false,
       showBanner: false,
+      errorMsg: { value: false, errors: [] },
     };
     this.handleClickLogin = this.handleClickLogin.bind(this);
     this.handleClickRegister = this.handleClickRegister.bind(this);
@@ -54,7 +56,14 @@ export default class QAForum extends React.Component {
     console.log("guest");
   }
 
+  handleErrorMsg(error) {
+    this.setState({
+      errorMsg: error,
+    });
+  }
+
   render() {
+    // Welcome Page
     const welcomeActive = () => {
       if (this.state.showWelcome) {
         return (
@@ -67,10 +76,24 @@ export default class QAForum extends React.Component {
       }
     };
 
+    // Register Form
+    const registerFormActive = () => {
+      if (this.state.showRegisterForm) {
+        return (
+          <RegisterForm
+            onBackClick={this.handleClickBack}
+            onLoginClick={this.handleClickLogin}
+            onFormError={this.handleErrorMsg}
+          ></RegisterForm>
+        );
+      }
+    };
+
     return (
       <React.Fragment>
         {welcomeActive()}
         <div className="main"></div>
+        {registerFormActive()}
       </React.Fragment>
     );
   }

@@ -1,8 +1,5 @@
-import axios from "axios";
 import React from "react";
 import PropTypes from "prop-types";
-
-axios.defaults.withCredentials = true;
 
 export default class Welcome extends React.Component {
   constructor(props) {
