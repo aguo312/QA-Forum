@@ -16,9 +16,9 @@ Startup:
 Open terminal and run:
 mongod.exe --dbpath="c:\data\db"
 
-Open terminal -> cd to final-project folder and run:
+Open terminal -> cd to QA-Forum folder and run:
 SECRET_KEY=<secret string> nodemon server/server.js
 Example: SECRET_KEY="secret string" nodemon server/server.js
 
-Open terminal -> cd to final-project/client/src folder and run:
+Open terminal -> cd to QA-Forum/client/src folder and run:
 npm start
