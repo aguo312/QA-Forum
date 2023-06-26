@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import Welcome from "./Welcome";
 import RegisterForm from "./RegisterForm";
+import ErrorMessage from "./ErrorMessage";
 
 axios.defaults.withCredentials = true;
 
@@ -90,10 +91,18 @@ export default class QAForum extends React.Component {
       }
     };
 
+    // Error Message
+    const errorMsgActive = () => {
+      if (this.state.errorMsg.value) {
+        return (
+          <ErrorMessage errors={this.state.errorMsg.errors}></ErrorMessage>
+        );
+      }
+    };
     return (
       <React.Fragment>
         {welcomeActive()}
-        <div className="main"></div>
+        <div className="main">{errorMsgActive()}</div>
         {registerFormActive()}
       </React.Fragment>
     );

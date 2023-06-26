@@ -20,3 +20,7 @@ body {
   margin: 1%;
   padding: 1%;
 }
+
+#errorMessage {
+  color: red;
+}
