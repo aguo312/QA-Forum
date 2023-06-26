@@ -29,6 +29,7 @@ export default class QAForum extends React.Component {
     this.setState({
       showWelcome: false,
       showLoginForm: true,
+      showRegisterForm: false,
     });
     console.log("login");
   }

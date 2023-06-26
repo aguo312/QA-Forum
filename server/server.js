@@ -4,6 +4,12 @@ const port = 8000;
 const cors = require("cors");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
+const bcrypt = require("bcrypt");
+const User = require("./models/users");
+// const Answer = require("./models/answers");
+// const Question = require("./models/questions");
+// const Comment = require("./models/comments");
+// const Tag = require("./models/tags");
 
 let mongoose = require("mongoose");
 let mongoDB = "mongodb://127.0.0.1:27017/qa_forum";
@@ -48,6 +54,30 @@ app.use(
   })
 );
 
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
+});
+
+app.get("/users/:email", async (req, res) => {
+  const email = req.params.email;
+  let existingUser = await User.findOne({ email });
+  res.send(existingUser);
+});
+
+app.post("/register", async (req, res) => {
+  const username = req.body[0];
+  const email = req.body[1];
+  const password = req.body[2];
+  const hashPass = await bcrypt.hash(password, 10);
+  const newUser = new User({
+    username: username,
+    email: email,
+    password: hashPass,
+  });
+  newUser.save();
+  res.send(newUser);
 });

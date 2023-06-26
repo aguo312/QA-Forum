@@ -116,7 +116,34 @@ export default class RegisterForm extends React.Component {
       };
       this.props.onFormError(error);
     } else {
-      console.log("registering");
+      axios
+        .get("http://localhost:8000/users/" + this.state.email)
+        .then((res) => {
+          if (res.data) {
+            const errorMessages = [];
+            errorMessages.push("Email is already used by another user!");
+            const error = {
+              value: true,
+              errors: errorMessages,
+            };
+            this.props.onFormError(error);
+          } else {
+            const newUser = [];
+            newUser.push(this.state.username);
+            newUser.push(this.state.email);
+            newUser.push(this.state.password);
+            axios
+              .post("http://localhost:8000/register", newUser)
+              .then((res) => {
+                const error = {
+                  value: false,
+                  errors: "",
+                };
+                this.props.onFormError(error);
+                this.props.onLoginClick();
+              });
+          }
+        });
     }
   }
 
