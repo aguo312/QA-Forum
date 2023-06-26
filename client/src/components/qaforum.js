@@ -46,6 +46,7 @@ export default class QAForum extends React.Component {
       showWelcome: true,
       showLoginForm: false,
       showRegisterForm: false,
+      errorMsg: { value: false, errors: [] },
     });
     console.log("back");
   }
@@ -99,6 +100,7 @@ export default class QAForum extends React.Component {
         );
       }
     };
+
     return (
       <React.Fragment>
         {welcomeActive()}
