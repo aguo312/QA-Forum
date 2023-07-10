@@ -25,7 +25,10 @@ export default class QAForum extends React.Component {
     this.handleClickQuestionsTab = this.handleClickQuestionsTab.bind(this);
     this.handleClickTagsTab = this.handleClickTagsTab.bind(this);
     this.handleClickProfileTab = this.handleClickProfileTab.bind(this);
+    this.handleClickAskQuestion = this.handleClickAskQuestion.bind(this);
+    this.handleSearchTextEnter = this.handleSearchTextEnter.bind(this);
     this.handleLoggedIn = this.handleLoggedIn.bind(this);
+    this.handleClickLogOut = this.handleClickLogOut.bind(this);
     this.handleErrorMsg = this.handleErrorMsg.bind(this);
   }
 
@@ -93,11 +96,45 @@ export default class QAForum extends React.Component {
     });
   }
 
+  handleClickAskQuestion() {
+    this.setState({
+      showBanner: true,
+      showQuestionsTab: false,
+      showTagsTab: false,
+      showProfileTab: false,
+      showQuestionForm: true,
+    });
+  }
+
+  handleSearchTextEnter(search) {
+    this.setState({
+      showBanner: true,
+      searchText: { value: true, tagsOnly: false, search: search },
+      showQuestionsTab: { value: true, page: 0 },
+    });
+  }
+
   handleLoggedIn() {
     this.setState({
       showLoginForm: false,
       showBanner: true,
       showQuestionsTab: true,
+    });
+  }
+
+  handleClickLogOut() {
+    this.setState({
+      showWelcome: true,
+      showLoginForm: false,
+      showRegisterForm: false,
+      showBanner: false,
+      // searchText: { value: false },
+      showQuestionsTab: false,
+      showTagsTab: false,
+      showProfileTab: false,
+      showQuestionForm: false,
+      showAnswerForm: false,
+      errorMsg: { value: false, errors: [] },
     });
   }
 
@@ -152,9 +189,12 @@ export default class QAForum extends React.Component {
       if (this.state.showBanner) {
         return (
           <Banner
-            onQuestionsTabClick={this.handleClickQustionsTab}
+            onQuestionsTabClick={this.handleClickQuestionsTab}
             onTagsTabClick={this.handleClickTagsTab}
             onProfileTabClick={this.handleClickProfileTab}
+            onAskQuestionClick={this.handleClickAskQuestion}
+            onSearchTextEnter={this.handleSearchTextEnter}
+            onLogOutClick={this.handleClickLogOut}
           ></Banner>
         );
       }

@@ -94,3 +94,14 @@ app.post("/login", async (req, res) => {
     res.send(userData.data);
   }
 });
+
+app.post("/logout", async (req, res) => {
+  req.session.destroy((err) => {
+    if (err) throw err;
+    res.send();
+  });
+});
+
+app.get("/userdata", async (req, res) => {
+  res.send(req.session);
+});
