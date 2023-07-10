@@ -81,3 +81,16 @@ app.post("/register", async (req, res) => {
   newUser.save();
   res.send(newUser);
 });
+
+app.post("/login", async (req, res) => {
+  const userData = req.body[0];
+  const password = req.body[1];
+  const passwordCheck = await bcrypt.compare(password, userData.data.password);
+  if (!passwordCheck) {
+    res.send();
+  } else {
+    req.session.loggedUser = userData.data;
+    req.session.guest = false;
+    res.send(userData.data);
+  }
+});

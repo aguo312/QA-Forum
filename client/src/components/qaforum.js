@@ -2,6 +2,8 @@ import React from "react";
 import axios from "axios";
 import Welcome from "./Welcome";
 import RegisterForm from "./RegisterForm";
+import LoginForm from "./LoginForm";
+import Banner from "./Banner";
 import ErrorMessage from "./ErrorMessage";
 
 axios.defaults.withCredentials = true;
@@ -20,6 +22,10 @@ export default class QAForum extends React.Component {
     this.handleClickRegister = this.handleClickRegister.bind(this);
     this.handleClickBack = this.handleClickBack.bind(this);
     this.handleClickGuest = this.handleClickGuest.bind(this);
+    this.handleClickQuestionsTab = this.handleClickQuestionsTab.bind(this);
+    this.handleClickTagsTab = this.handleClickTagsTab.bind(this);
+    this.handleClickProfileTab = this.handleClickProfileTab.bind(this);
+    this.handleLoggedIn = this.handleLoggedIn.bind(this);
     this.handleErrorMsg = this.handleErrorMsg.bind(this);
   }
 
@@ -60,6 +66,41 @@ export default class QAForum extends React.Component {
     console.log("guest");
   }
 
+  handleClickQuestionsTab() {
+    this.setState({
+      showBanner: true,
+      showQuestionsTab: true,
+      showTagsTab: false,
+      showProfileTab: false,
+    });
+  }
+
+  handleClickTagsTab() {
+    this.setState({
+      showBanner: true,
+      showQuestionsTab: false,
+      showTagsTab: true,
+      showProfileTab: false,
+    });
+  }
+
+  handleClickProfileTab() {
+    this.setState({
+      showBanner: true,
+      showQuestionsTab: false,
+      showTagsTab: false,
+      showProfileTab: true,
+    });
+  }
+
+  handleLoggedIn() {
+    this.setState({
+      showLoginForm: false,
+      showBanner: true,
+      showQuestionsTab: true,
+    });
+  }
+
   handleErrorMsg(error) {
     this.setState({
       errorMsg: error,
@@ -93,6 +134,32 @@ export default class QAForum extends React.Component {
       }
     };
 
+    // Login Form
+    const loginFormActive = () => {
+      if (this.state.showLoginForm) {
+        return (
+          <LoginForm
+            onBackClick={this.handleClickBack}
+            onLoggedIn={this.handleLoggedIn}
+            onFormError={this.handleErrorMsg}
+          ></LoginForm>
+        );
+      }
+    };
+
+    // Banner
+    const bannerActive = () => {
+      if (this.state.showBanner) {
+        return (
+          <Banner
+            onQuestionsTabClick={this.handleClickQustionsTab}
+            onTagsTabClick={this.handleClickTagsTab}
+            onProfileTabClick={this.handleClickProfileTab}
+          ></Banner>
+        );
+      }
+    };
+
     // Error Message
     const errorMsgActive = () => {
       if (this.state.errorMsg.value) {
@@ -105,7 +172,9 @@ export default class QAForum extends React.Component {
     return (
       <React.Fragment>
         {welcomeActive()}
+        {bannerActive()}
         <div className="main">{errorMsgActive()}</div>
+        {loginFormActive()}
         {registerFormActive()}
       </React.Fragment>
     );
