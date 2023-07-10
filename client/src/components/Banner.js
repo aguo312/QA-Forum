@@ -70,10 +70,10 @@ export default class Banner extends React.Component {
       username = this.state.username.user.username + "'s Profile";
     }
     return (
-      <div>
-        <a>Questions</a>
-        <a>Tags</a>
-        <a>{username}</a>
+      <div className="banner">
+        <a onClick={this.handleClickQuestionsTab}>Questions</a>
+        <a onClick={this.handleClickTagsTab}>Tags</a>
+        <a onClick={this.handleClickProfileTab}>{username}</a>
         <b>Q&A Forum</b>
         <input
           type="button"
