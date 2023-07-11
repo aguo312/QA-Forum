@@ -16,6 +16,9 @@ export default class QAForum extends React.Component {
       showLoginForm: false,
       showRegisterForm: false,
       showBanner: false,
+      showQuestionsTab: true,
+      showTagsTab: false,
+      showProfileTab: false,
       errorMsg: { value: false, errors: [] },
     };
     this.handleClickLogin = this.handleClickLogin.bind(this);
@@ -65,6 +68,9 @@ export default class QAForum extends React.Component {
     this.setState({
       showWelcome: false,
       showBanner: true,
+      showQuestionsTab: true,
+      showTagsTab: false,
+      showProfileTab: false,
     });
     console.log("guest");
   }
@@ -110,7 +116,9 @@ export default class QAForum extends React.Component {
     this.setState({
       showBanner: true,
       searchText: { value: true, tagsOnly: false, search: search },
-      showQuestionsTab: { value: true, page: 0 },
+      showQuestionsTab: false,
+      showTagsTab: false,
+      showProfileTab: false,
     });
   }
 
@@ -195,6 +203,14 @@ export default class QAForum extends React.Component {
             onAskQuestionClick={this.handleClickAskQuestion}
             onSearchTextEnter={this.handleSearchTextEnter}
             onLogOutClick={this.handleClickLogOut}
+            tabs={
+              // this.state.showQuestionsTab
+              [
+                this.state.showQuestionsTab,
+                this.state.showTagsTab,
+                this.state.showProfileTab,
+              ]
+            }
           ></Banner>
         );
       }

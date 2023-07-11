@@ -21,6 +21,7 @@ body {
   padding: 1%;
 }
 
+/* needs work fix */
 .banner {
   overflow: hidden;
   background-color: lightgray;
@@ -30,13 +31,33 @@ body {
   width: 100%;
 }
 
-.banner a {
+.banner button {
+  border: none;
+  font-family: 'Times New Roman';
+  font-size: medium;
   float: left;
   display: block;
   color: black;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+}
+
+.currentTab {
+  background-color: #0281e8;
+}
+
+.notCurrentTab {
+  background-color: lightgray;
+}
+
+.notCurrentTab:hover {
+  background-color: gray;
+  color: black;
+}
+
+.notCurrentTab2 {
+  background-color: lightgray;
 }
 
 .banner b {
@@ -52,6 +73,8 @@ body {
   text-align: left;
   margin: 12px;
 }
+
+/* needs work fix */
 
 #errorMessage {
   color: red;

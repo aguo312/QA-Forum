@@ -9,7 +9,7 @@ export default class Banner extends React.Component {
     super(props);
     this.state = {
       searchBox: "",
-      username: { user: { username: "guest" }, guest: true },
+      username: { user: { username: "Guest" }, guest: true },
     };
     this.handleClickQuestionsTab = this.handleClickQuestionsTab.bind(this);
     this.handleClickTagsTab = this.handleClickTagsTab.bind(this);
@@ -22,12 +22,14 @@ export default class Banner extends React.Component {
 
   componentDidMount() {
     axios.get("http://localhost:8000/userdata").then((res) => {
-      this.setState({
-        username: {
-          user: res.data.loggedUser,
-          guest: res.data.guest,
-        },
-      });
+      if (res.data.loggedUser && !res.data.guest) {
+        this.setState({
+          username: {
+            user: res.data.loggedUser,
+            guest: res.data.guest,
+          },
+        });
+      }
     });
   }
 
@@ -40,8 +42,9 @@ export default class Banner extends React.Component {
   }
 
   handleClickProfileTab() {
-    // temporary
-    this.props.onProfileTabClick();
+    if (!this.state.username.guest) {
+      this.props.onProfileTabClick();
+    }
   }
 
   handleSearchTextChange(e) {
@@ -69,11 +72,27 @@ export default class Banner extends React.Component {
     if (!this.state.username.guest) {
       username = this.state.username.user.username + "'s Profile";
     }
+    let questionsClass = this.props.tabs[0] ? "currentTab" : "notCurrentTab";
+    let tagsClass = this.props.tabs[1] ? "currentTab" : "notCurrentTab";
+    let profileClass = this.state.username.guest
+      ? "notCurrentTab2"
+      : this.props.tabs[2]
+      ? "currentTab"
+      : "notCurrentTab";
     return (
       <div className="banner">
-        <a onClick={this.handleClickQuestionsTab}>Questions</a>
-        <a onClick={this.handleClickTagsTab}>Tags</a>
-        <a onClick={this.handleClickProfileTab}>{username}</a>
+        <button
+          className={questionsClass}
+          onClick={this.handleClickQuestionsTab}
+        >
+          Questions
+        </button>
+        <button className={tagsClass} onClick={this.handleClickTagsTab}>
+          Tags
+        </button>
+        <button className={profileClass} onClick={this.handleClickProfileTab}>
+          {username}
+        </button>
         <b>Q&A Forum</b>
         <input
           type="button"
@@ -99,4 +118,5 @@ Banner.propTypes = {
   onAskQuestionClick: PropTypes.func,
   onSearchTextEnter: PropTypes.func,
   onLogOutClick: PropTypes.func,
+  tabs: PropTypes.array,
 };
