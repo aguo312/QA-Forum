@@ -7,6 +7,9 @@ import Banner from "./Banner";
 import DataTable from "./DataTable";
 import TagsTable from "./TagsTable";
 import Profile from "./Profile";
+import QuestionForm from "./QuestionForm";
+import AnswerForm from "./AnswerForm";
+import EditForm from "./EditForm";
 import ErrorMessage from "./ErrorMessage";
 
 axios.defaults.withCredentials = true;
@@ -22,6 +25,9 @@ export default class QAForum extends React.Component {
       showQuestionsTab: false,
       showTagsTab: false,
       showProfileTab: false,
+      showQuestionForm: false,
+      showAnswerForm: false,
+      showEditForm: false,
       errorMsg: { value: false, errors: [] },
     };
     this.handleClickLogin = this.handleClickLogin.bind(this);
@@ -248,6 +254,27 @@ export default class QAForum extends React.Component {
       }
     };
 
+    // Question Form
+    const questionFormActive = () => {
+      if (this.state.showQuestionForm) {
+        return <QuestionForm></QuestionForm>;
+      }
+    };
+
+    // Answer Form
+    const answerFormActive = () => {
+      if (this.state.showAnswerForm) {
+        return <AnswerForm></AnswerForm>;
+      }
+    };
+
+    // Edit Form
+    const editFormActive = () => {
+      if (this.state.showEditForm) {
+        return <EditForm></EditForm>;
+      }
+    };
+
     // Error Message
     const errorMsgActive = () => {
       if (this.state.errorMsg.value) {
@@ -269,6 +296,9 @@ export default class QAForum extends React.Component {
         </div>
         {loginFormActive()}
         {registerFormActive()}
+        {questionFormActive()}
+        {answerFormActive()}
+        {editFormActive()}
       </React.Fragment>
     );
   }
