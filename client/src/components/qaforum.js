@@ -4,6 +4,9 @@ import Welcome from "./Welcome";
 import RegisterForm from "./RegisterForm";
 import LoginForm from "./LoginForm";
 import Banner from "./Banner";
+import DataTable from "./DataTable";
+import TagsTable from "./TagsTable";
+import Profile from "./Profile";
 import ErrorMessage from "./ErrorMessage";
 
 axios.defaults.withCredentials = true;
@@ -16,7 +19,7 @@ export default class QAForum extends React.Component {
       showLoginForm: false,
       showRegisterForm: false,
       showBanner: false,
-      showQuestionsTab: true,
+      showQuestionsTab: false,
       showTagsTab: false,
       showProfileTab: false,
       errorMsg: { value: false, errors: [] },
@@ -226,6 +229,25 @@ export default class QAForum extends React.Component {
       }
     };
 
+    // Data Table
+    const questionsActive = () => {
+      if (this.state.showQuestionsTab) {
+        return <DataTable></DataTable>;
+      }
+    };
+
+    const tagsActive = () => {
+      if (this.state.showTagsTab) {
+        return <TagsTable></TagsTable>;
+      }
+    };
+
+    const profileActive = () => {
+      if (this.state.showProfileTab) {
+        return <Profile></Profile>;
+      }
+    };
+
     // Error Message
     const errorMsgActive = () => {
       if (this.state.errorMsg.value) {
@@ -239,7 +261,12 @@ export default class QAForum extends React.Component {
       <React.Fragment>
         {welcomeActive()}
         {bannerActive()}
-        <div className="main">{errorMsgActive()}</div>
+        <div className="main">
+          {questionsActive()}
+          {tagsActive()}
+          {profileActive()}
+          {errorMsgActive()}
+        </div>
         {loginFormActive()}
         {registerFormActive()}
       </React.Fragment>
