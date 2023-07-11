@@ -105,7 +105,3 @@ app.post("/logout", async (req, res) => {
 app.get("/userdata", async (req, res) => {
   res.send(req.session);
 });
-
-app.get("/sessiondata", async (req, res) => {
-  res.send();
-});

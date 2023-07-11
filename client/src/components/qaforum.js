@@ -35,7 +35,17 @@ export default class QAForum extends React.Component {
     this.handleErrorMsg = this.handleErrorMsg.bind(this);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    axios.get("http://localhost:8000/userdata").then((res) => {
+      if (res.data.loggedUser && !res.data.guest) {
+        this.setState({
+          showWelcome: false,
+          showBanner: true,
+          showQuestionsTab: true,
+        });
+      }
+    });
+  }
 
   handleClickLogin() {
     this.setState({
