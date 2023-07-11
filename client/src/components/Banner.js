@@ -79,6 +79,18 @@ export default class Banner extends React.Component {
       : this.props.tabs[2]
       ? "currentTab"
       : "notCurrentTab";
+    const askQuestionActive = () => {
+      if (!this.state.username.guest) {
+        return (
+          <input
+            type="button"
+            value="Ask A Question"
+            onClick={this.handleClickAskQuestion}
+          ></input>
+        );
+      }
+    };
+
     return (
       <div className="banner">
         <button
@@ -99,6 +111,7 @@ export default class Banner extends React.Component {
           value="Log Out"
           onClick={this.handleClickLogOut}
         ></input>
+        {askQuestionActive()}
         <input
           type="text"
           id="searchBox"

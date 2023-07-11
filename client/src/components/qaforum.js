@@ -222,14 +222,11 @@ export default class QAForum extends React.Component {
             onAskQuestionClick={this.handleClickAskQuestion}
             onSearchTextEnter={this.handleSearchTextEnter}
             onLogOutClick={this.handleClickLogOut}
-            tabs={
-              // this.state.showQuestionsTab
-              [
-                this.state.showQuestionsTab,
-                this.state.showTagsTab,
-                this.state.showProfileTab,
-              ]
-            }
+            tabs={[
+              this.state.showQuestionsTab,
+              this.state.showTagsTab,
+              this.state.showProfileTab,
+            ]}
           ></Banner>
         );
       }

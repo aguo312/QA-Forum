@@ -73,6 +73,11 @@ body {
   margin: 0.9%;
 }
 
+.main {
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
 #errorMessage {
   color: red;
 }
