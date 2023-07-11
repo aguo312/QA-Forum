@@ -21,7 +21,6 @@ body {
   padding: 1%;
 }
 
-/* needs work fix */
 .banner {
   overflow: hidden;
   background-color: lightgray;
@@ -39,7 +38,7 @@ body {
   display: block;
   color: black;
   text-align: center;
-  padding: 14px 16px;
+  padding: 1%;
   text-decoration: none;
 }
 
@@ -64,17 +63,15 @@ body {
   font-size: 150%;
   display: inline-block;
   vertical-align: middle;
-  line-height: 46.4px;
+  line-height: 200%
 }
 
 .banner input {
   float: right;
   display: block;
   text-align: left;
-  margin: 12px;
+  margin: 0.9%;
 }
-
-/* needs work fix */
 
 #errorMessage {
   color: red;
