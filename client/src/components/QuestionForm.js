@@ -20,6 +20,16 @@ export default class QuestionForm extends React.Component {
     this.handleTagsChange = this.handleTagsChange.bind(this);
   }
 
+  componentDidMount() {
+    axios.get("http://localhost:8000/userdata").then((res) => {
+      if (res.data.loggedUser && !res.data.guest) {
+        this.setState({
+          user: res.data.loggedUser,
+        });
+      }
+    });
+  }
+
   handleTitleChange(e) {
     this.setState({ title: e.target.value });
   }
@@ -40,11 +50,11 @@ export default class QuestionForm extends React.Component {
     return (
       <React.Fragment>
         <form id="questionForm">
-          <label>
-            <div>Question Title</div>
-            Title should not be more than 50 characters.
-            <br />
-          </label>
+          {/* <label> */}
+          <div>Question Title</div>
+          Title should not be more than 50 characters.
+          <br />
+          {/* </label> */}
           <textarea
             id="qTitle"
             name="qTitle"
@@ -54,11 +64,11 @@ export default class QuestionForm extends React.Component {
           <br />
           <br />
           <br />
-          <label>
-            <div>Question Summary</div>
-            Summary should not be more than 140 characters.
-            <br />
-          </label>
+          {/* <label> */}
+          <div>Question Summary</div>
+          Summary should not be more than 140 characters.
+          <br />
+          {/* </label> */}
           <textarea
             id="qSummary"
             name="qSummary"
@@ -68,11 +78,11 @@ export default class QuestionForm extends React.Component {
           <br />
           <br />
           <br />
-          <label>
-            <div>Question Text</div>
-            Add Details
-            <br />
-          </label>
+          {/* <label> */}
+          <div>Question Text</div>
+          Add Details
+          <br />
+          {/* </label> */}
           <textarea
             id="qText"
             name="qText"
@@ -82,11 +92,11 @@ export default class QuestionForm extends React.Component {
           <br />
           <br />
           <br />
-          <label>
-            <div>Tags</div>
-            Add Keywords separated by whitespace.
-            <br />
-          </label>
+          {/* <label> */}
+          <div>Tags</div>
+          Add Keywords separated by whitespace.
+          <br />
+          {/* </label> */}
           <textarea
             id="qTags"
             name="qTags"
