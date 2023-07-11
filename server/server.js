@@ -44,7 +44,7 @@ app.use(
   session({
     secret: process.env.SECRET_KEY,
     cookie: {
-      expires: 1000 * 60 * 60 * 24,
+      expires: 1000 * 60 * 5,
       httpOnly: true,
       secure: false,
     },
