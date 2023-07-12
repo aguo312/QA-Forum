@@ -13,18 +13,25 @@ export default class QuestionForm extends React.Component {
       text: "",
       tags: "",
       user: {},
+      existingTags: [],
     };
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleSummaryChange = this.handleSummaryChange.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleTagsChange = this.handleTagsChange.bind(this);
+    this.handleClickPostQuestion = this.handleClickPostQuestion.bind(this);
   }
 
   componentDidMount() {
-    axios.get("http://localhost:8000/userdata").then((res) => {
-      if (res.data.loggedUser && !res.data.guest) {
+    axios.get("http://localhost:8000/userandtagsdata").then((res) => {
+      if (res.data[0].loggedUser && !res.data[0].guest) {
         this.setState({
-          user: res.data.loggedUser,
+          user: res.data[0].loggedUser,
+          existingTags: res.data[1],
+        });
+      } else {
+        this.setState({
+          existingTags: res.data[1],
         });
       }
     });
@@ -46,71 +53,135 @@ export default class QuestionForm extends React.Component {
     this.setState({ tags: e.target.value });
   }
 
+  handleClickPostQuestion(e) {
+    e.preventDefault();
+    console.log("posting");
+    if (!this.state.user.username) {
+      const errorMessages = [];
+      errorMessages.push(
+        "Your current session has expired. Please log in again!"
+      );
+      const error = {
+        value: true,
+        errors: errorMessages,
+      };
+      this.props.onFormError(error);
+    } else {
+      const emptyTitle = this.state.title.length === 0;
+      const emptySummary = this.state.summary.length === 0;
+      const emptyText = this.state.text.length === 0;
+      const emptyTags = this.state.tags.length === 0;
+      const invalidTitle = this.state.title.length > 50;
+      const invalidSummary = this.state.summary.length > 140;
+      const invalidReputation = this.state.user.reputation < 100;
+      // change tags to lowercase, remove empty spaces
+      const tags = Array.from(
+        new Set(
+          this.state.tags
+            .toLowerCase()
+            .split(" ")
+            .filter((s) => s !== "")
+        )
+      );
+      // add code for correctly adding tags to question
+      const newTagObjects = [];
+      tags.forEach((tagName) => {
+        if (!this.state.existingTags.includes(tagName)) {
+          const newTagObject = {
+            name: tagName,
+            owner: this.state.user._id,
+          };
+          newTagObjects.push(newTagObjects);
+        }
+      });
+      // add code for not enough rep to add tags
+      if (invalidReputation && newTagObjects.length > 0) {
+        const errorMessages = [];
+        errorMessages.push(
+          "You do not have enough reputation to create new tags!"
+        );
+        const error = {
+          value: true,
+          errors: errorMessages,
+        };
+        this.props.onFormError(error);
+      } else if (
+        emptyTitle ||
+        emptySummary ||
+        emptyText ||
+        emptyTags ||
+        invalidTitle ||
+        invalidSummary
+      ) {
+        const errorMessages = [];
+        if (emptyTitle) {
+          errorMessages.push("Question Title cannot be empty!");
+        }
+        if (invalidTitle) {
+          errorMessages.push(
+            "Question Title cannot be more than 50 characters!"
+          );
+        }
+        if (emptySummary) {
+          errorMessages.push("Question Summary cannot be empty!");
+        }
+        if (invalidSummary) {
+          errorMessages.push(
+            "Question Summary cannot be more than 140 characters!"
+          );
+        }
+        if (emptyText) {
+          errorMessages.push("Question Text cannot be empty!");
+        }
+        if (emptyTags) {
+          errorMessages.push("Tags cannot be empty!");
+        }
+        const error = {
+          value: true,
+          errors: errorMessages,
+        };
+        this.props.onFormError(error);
+      } else {
+        console.log("no error");
+      }
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
         <form id="questionForm">
-          {/* <label> */}
           <div>Question Title</div>
           Title should not be more than 50 characters.
           <br />
-          {/* </label> */}
-          <textarea
-            id="qTitle"
-            name="qTitle"
-            value={this.state.title}
-            onChange={this.handleTitleChange}
-          ></textarea>
+          <textarea id="qTitle" onChange={this.handleTitleChange}></textarea>
           <br />
           <br />
           <br />
-          {/* <label> */}
           <div>Question Summary</div>
           Summary should not be more than 140 characters.
           <br />
-          {/* </label> */}
           <textarea
             id="qSummary"
-            name="qSummary"
-            value={this.state.summary}
             onChange={this.handleSummaryChange}
           ></textarea>
           <br />
           <br />
           <br />
-          {/* <label> */}
           <div>Question Text</div>
           Add Details
           <br />
-          {/* </label> */}
-          <textarea
-            id="qText"
-            name="qText"
-            value={this.state.text}
-            onChange={this.handleTextChange}
-          ></textarea>
+          <textarea id="qText" onChange={this.handleTextChange}></textarea>
           <br />
           <br />
           <br />
-          {/* <label> */}
           <div>Tags</div>
           Add Keywords separated by whitespace.
           <br />
-          {/* </label> */}
-          <textarea
-            id="qTags"
-            name="qTags"
-            value={this.state.tags}
-            onChange={this.handleTagsChange}
-          ></textarea>
+          <textarea id="qTags" onChange={this.handleTagsChange}></textarea>
           <br />
           <br />
-          <input
-            type="button"
-            id="postQuestionButton"
-            value="Post Question"
-            onClick={this.handleClickPostQuestion}
-          ></input>
+          <button onClick={this.handleClickPostQuestion}>Post Question</button>
         </form>
       </React.Fragment>
     );

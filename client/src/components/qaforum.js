@@ -100,6 +100,7 @@ export default class QAForum extends React.Component {
       showQuestionsTab: true,
       showTagsTab: false,
       showProfileTab: false,
+      showQuestionForm: false,
     });
   }
 
@@ -109,6 +110,7 @@ export default class QAForum extends React.Component {
       showQuestionsTab: false,
       showTagsTab: true,
       showProfileTab: false,
+      showQuestionForm: false,
     });
   }
 
@@ -118,6 +120,7 @@ export default class QAForum extends React.Component {
       showQuestionsTab: false,
       showTagsTab: false,
       showProfileTab: true,
+      showQuestionForm: false,
     });
   }
 
@@ -138,6 +141,7 @@ export default class QAForum extends React.Component {
       showQuestionsTab: false,
       showTagsTab: false,
       showProfileTab: false,
+      showQuestionForm: false,
     });
   }
 
@@ -254,7 +258,7 @@ export default class QAForum extends React.Component {
     // Question Form
     const questionFormActive = () => {
       if (this.state.showQuestionForm) {
-        return <QuestionForm></QuestionForm>;
+        return <QuestionForm onFormError={this.handleErrorMsg}></QuestionForm>;
       }
     };
 
@@ -286,10 +290,10 @@ export default class QAForum extends React.Component {
         {welcomeActive()}
         {bannerActive()}
         <div className="main">
+          {errorMsgActive()}
           {questionsActive()}
           {tagsActive()}
           {profileActive()}
-          {errorMsgActive()}
         </div>
         {loginFormActive()}
         {registerFormActive()}

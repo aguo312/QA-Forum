@@ -6,10 +6,10 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const bcrypt = require("bcrypt");
 const User = require("./models/users");
-// const Answer = require("./models/answers");
 // const Question = require("./models/questions");
+// const Answer = require("./models/answers");
+const Tag = require("./models/tags");
 // const Comment = require("./models/comments");
-// const Tag = require("./models/tags");
 
 let mongoose = require("mongoose");
 let mongoDB = "mongodb://127.0.0.1:27017/qa_forum";
@@ -104,4 +104,12 @@ app.post("/logout", async (req, res) => {
 
 app.get("/userdata", async (req, res) => {
   res.send(req.session);
+});
+
+app.get("/userandtagsdata", async (req, res) => {
+  const tagData = await Tag.find({});
+  const existingTags = tagData.map((tagObj) => {
+    return tagObj.name;
+  });
+  res.send([req.session, existingTags]);
 });
