@@ -12,6 +12,7 @@ const Tag = require("./models/tags");
 // const Comment = require("./models/comments");
 
 let mongoose = require("mongoose");
+const e = require("express");
 let mongoDB = "mongodb://127.0.0.1:27017/qa_forum";
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = global.Promise;
@@ -106,10 +107,26 @@ app.get("/userdata", async (req, res) => {
   res.send(req.session);
 });
 
-app.get("/userandtagsdata", async (req, res) => {
+app.get("/userandtagsname", async (req, res) => {
   const tagData = await Tag.find({});
   const existingTags = tagData.map((tagObj) => {
     return tagObj.name;
   });
   res.send([req.session, existingTags]);
+});
+
+app.post("/addtags", async (req, res) => {
+  req.body.forEach((e) => {
+    const tagObj = new Tag(e);
+    tagObj.save();
+  });
+  res.send(req.body);
+});
+
+app.get("/tags", async (req, res) => {
+  const tagData = await Tag.find({});
+  // const existingTags = tagData.map((tagObj) => {
+  //   return tagObj.name;
+  // });
+  res.send(tagData);
 });

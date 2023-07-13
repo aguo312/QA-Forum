@@ -23,7 +23,7 @@ export default class QuestionForm extends React.Component {
   }
 
   componentDidMount() {
-    axios.get("http://localhost:8000/userandtagsdata").then((res) => {
+    axios.get("http://localhost:8000/userandtagsname").then((res) => {
       if (res.data[0].loggedUser && !res.data[0].guest) {
         this.setState({
           user: res.data[0].loggedUser,
@@ -83,7 +83,6 @@ export default class QuestionForm extends React.Component {
             .filter((s) => s !== "")
         )
       );
-      // add code for correctly adding tags to question
       const newTagObjects = [];
       tags.forEach((tagName) => {
         if (!this.state.existingTags.includes(tagName)) {
@@ -91,10 +90,9 @@ export default class QuestionForm extends React.Component {
             name: tagName,
             owner: this.state.user._id,
           };
-          newTagObjects.push(newTagObjects);
+          newTagObjects.push(newTagObject);
         }
       });
-      // add code for not enough rep to add tags
       if (invalidReputation && newTagObjects.length > 0) {
         const errorMessages = [];
         errorMessages.push(
@@ -142,7 +140,24 @@ export default class QuestionForm extends React.Component {
         };
         this.props.onFormError(error);
       } else {
-        console.log("no error");
+        console.log(newTagObjects);
+        axios
+          .post("http://localhost:8000/addtags", newTagObjects)
+          .then((res) => {
+            // console.log(res.data);
+            axios.get("http://localhost:8000/tags").then((res) => {
+              //   console.log(res.data);
+              const tagIds = res.data
+                .filter((tagObject) => {
+                  return tags.includes(tagObject.name);
+                })
+                .map((tagObject) => {
+                  return tagObject._id;
+                });
+              console.log(tagIds);
+            });
+          });
+        this.props.onQuestionsTabClick();
       }
     }
   }

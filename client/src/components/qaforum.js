@@ -258,7 +258,12 @@ export default class QAForum extends React.Component {
     // Question Form
     const questionFormActive = () => {
       if (this.state.showQuestionForm) {
-        return <QuestionForm onFormError={this.handleErrorMsg}></QuestionForm>;
+        return (
+          <QuestionForm
+            onQuestionsTabClick={this.handleClickQuestionsTab}
+            onFormError={this.handleErrorMsg}
+          ></QuestionForm>
+        );
       }
     };
 
