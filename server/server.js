@@ -6,7 +6,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const bcrypt = require("bcrypt");
 const User = require("./models/users");
-// const Question = require("./models/questions");
+const Question = require("./models/questions");
 // const Answer = require("./models/answers");
 const Tag = require("./models/tags");
 // const Comment = require("./models/comments");
@@ -129,4 +129,15 @@ app.get("/tags", async (req, res) => {
   //   return tagObj.name;
   // });
   res.send(tagData);
+});
+
+app.post("/addquestion", async (req, res) => {
+  let qstnObj = new Question(req.body);
+  qstnObj.save();
+  res.send(qstnObj);
+});
+
+app.get("/questions", async (req, res) => {
+  const questionData = await Question.find({}).populate("tags");
+  res.send(questionData);
 });

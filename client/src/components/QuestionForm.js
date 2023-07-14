@@ -154,10 +154,23 @@ export default class QuestionForm extends React.Component {
                 .map((tagObject) => {
                   return tagObject._id;
                 });
-              console.log(tagIds);
+              const newQuestion = {
+                title: this.state.title,
+                summary: this.state.summary,
+                text: this.state.text,
+                tags: tagIds,
+                asked_by: this.state.user.username,
+                owner: this.state.user._id,
+              };
+              axios
+                .post("http://localhost:8000/addquestion", newQuestion)
+                .then((res) => {
+                  const error = { value: false, errors: "" };
+                  this.props.onFormError(error);
+                  this.props.onQuestionsTabClick();
+                });
             });
           });
-        this.props.onQuestionsTabClick();
       }
     }
   }
