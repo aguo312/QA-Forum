@@ -9,7 +9,7 @@ export default class Banner extends React.Component {
     super(props);
     this.state = {
       searchBox: "",
-      username: { user: { username: "Guest" }, guest: true },
+      user: { guest: true },
     };
     this.handleClickQuestionsTab = this.handleClickQuestionsTab.bind(this);
     this.handleClickTagsTab = this.handleClickTagsTab.bind(this);
@@ -24,10 +24,7 @@ export default class Banner extends React.Component {
     axios.get("http://localhost:8000/userdata").then((res) => {
       if (res.data.loggedUser && !res.data.guest) {
         this.setState({
-          username: {
-            user: res.data.loggedUser,
-            guest: res.data.guest,
-          },
+          user: res.data.loggedUser,
         });
       }
     });
@@ -42,7 +39,7 @@ export default class Banner extends React.Component {
   }
 
   handleClickProfileTab() {
-    if (!this.state.username.guest) {
+    if (!this.state.user.guest) {
       this.props.onProfileTabClick();
     }
   }
@@ -69,18 +66,18 @@ export default class Banner extends React.Component {
 
   render() {
     let username = "Guest User";
-    if (!this.state.username.guest) {
-      username = this.state.username.user.username + "'s Profile";
+    if (!this.state.user.guest) {
+      username = this.state.user.username + "'s Profile";
     }
     let questionsClass = this.props.tabs[0] ? "currentTab" : "notCurrentTab";
     let tagsClass = this.props.tabs[1] ? "currentTab" : "notCurrentTab";
-    let profileClass = this.state.username.guest
+    let profileClass = this.state.user.guest
       ? "notCurrentTab2"
       : this.props.tabs[2]
       ? "currentTab"
       : "notCurrentTab";
     const askQuestionActive = () => {
-      if (!this.state.username.guest) {
+      if (!this.state.user.guest) {
         return (
           <input
             type="button"
