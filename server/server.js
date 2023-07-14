@@ -137,7 +137,7 @@ app.post("/addquestion", async (req, res) => {
   res.send(qstnObj);
 });
 
-app.get("/questions", async (req, res) => {
+app.get("/userandquestions", async (req, res) => {
   const questionData = await Question.find({}).populate("tags");
-  res.send(questionData);
+  res.send([req.session, questionData]);
 });

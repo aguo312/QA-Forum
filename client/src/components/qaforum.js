@@ -239,7 +239,11 @@ export default class QAForum extends React.Component {
     // Data Table
     const questionsActive = () => {
       if (this.state.showQuestionsTab) {
-        return <DataTable></DataTable>;
+        return (
+          <DataTable
+            onAskQuestionClick={this.handleClickAskQuestion}
+          ></DataTable>
+        );
       }
     };
 
