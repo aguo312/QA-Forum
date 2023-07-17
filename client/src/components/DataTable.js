@@ -32,9 +32,14 @@ export default class DataTable extends React.Component {
 
   render() {
     const rows = [];
-
-    this.state.questions.forEach((questionObject) => {
-      rows.push(<DataTableRow question={questionObject}></DataTableRow>);
+    // console.log(Object.entries(this.state.questions));
+    Array.from(this.state.questions).forEach((questionObject) => {
+      rows.push(
+        <DataTableRow
+          key={questionObject._id}
+          question={questionObject}
+        ></DataTableRow>
+      );
     });
 
     if (rows.length === 0) {
