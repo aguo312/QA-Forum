@@ -40,6 +40,7 @@ export default class QAForum extends React.Component {
     this.handleClickTagsTab = this.handleClickTagsTab.bind(this);
     this.handleClickProfileTab = this.handleClickProfileTab.bind(this);
     this.handleClickAskQuestion = this.handleClickAskQuestion.bind(this);
+    this.handleClickSearchByTag = this.handleClickSearchByTag.bind(this);
     this.handleSearchTextEnter = this.handleSearchTextEnter.bind(this);
     this.handleClickQuestionInfo = this.handleClickQuestionInfo.bind(this);
     this.handleLoggedIn = this.handleLoggedIn.bind(this);
@@ -138,6 +139,14 @@ export default class QAForum extends React.Component {
       showProfileTab: false,
       showQuestionForm: true,
       showQuestionInfo: { value: false },
+    });
+  }
+
+  handleClickSearchByTag(search) {
+    this.setState({
+      showBanner: true,
+      showTagsTab: false,
+      searchText: { value: true, tagsOnly: true, search: search },
     });
   }
 
@@ -265,7 +274,12 @@ export default class QAForum extends React.Component {
 
     const tagsActive = () => {
       if (this.state.showTagsTab) {
-        return <TagsTable></TagsTable>;
+        return (
+          <TagsTable
+            onAskQuestionClick={this.handleClickAskQuestion}
+            onSearchByTagClick={this.handleClickSearchByTag}
+          ></TagsTable>
+        );
       }
     };
 

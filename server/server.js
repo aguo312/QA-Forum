@@ -153,3 +153,8 @@ app.get("/questions/:qid", async (req, res) => {
   );
   res.send(question);
 });
+
+app.get("/questions", async (req, res) => {
+  const questionData = await Question.find({});
+  res.send(questionData);
+});
