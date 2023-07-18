@@ -12,7 +12,7 @@ export default class DataTable extends React.Component {
       user: { guest: true },
       questions: {},
     };
-    // this.handleClickAskQuestion = this.handleClickAskQuestion.bind(this);
+    this.handleClickQuestionInfo = this.handleClickQuestionInfo.bind(this);
   }
 
   componentDidMount() {
@@ -30,14 +30,18 @@ export default class DataTable extends React.Component {
     });
   }
 
+  handleClickQuestionInfo(qid) {
+    this.props.onQuestionInfoClick(qid);
+  }
+
   render() {
     const rows = [];
-    // console.log(Object.entries(this.state.questions));
     Array.from(this.state.questions).forEach((questionObject) => {
       rows.push(
         <DataTableRow
           key={questionObject._id}
           question={questionObject}
+          onQuestionInfoClick={this.handleClickQuestionInfo}
         ></DataTableRow>
       );
     });
@@ -45,9 +49,9 @@ export default class DataTable extends React.Component {
     if (rows.length === 0) {
       rows.push(
         <tr key={"none"}>
-          <td width="20%"></td>
-          <td width="60%">No Questions Found</td>
-          <td width="20%"></td>
+          <td className="leftData"></td>
+          <td className="centerData">No Questions Found</td>
+          <td className="rightData"></td>
         </tr>
       );
     }

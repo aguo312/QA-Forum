@@ -1,33 +1,47 @@
 import React from "react";
 import axios from "axios";
-import PropTypes from "prop-types";
 import DataTableRowTags from "./DataTableRowTags";
+import PropTypes from "prop-types";
 
 axios.defaults.withCredentials = true;
 
 export default class QuestionTable extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      question: { tags: [], answers: [] },
+    };
   }
 
   componentDidMount() {
-    axios.get().then((res) => {});
+    axios
+      .get("http://localhost:8000/questions/" + this.props.qid)
+      .then((res) => {
+        this.setState({
+          question: res.data,
+        });
+      });
   }
 
   render() {
+    const localDate = new Date(this.state.question.ask_date_time).toString();
+    const askedOn =
+      localDate.substring(4, 10) + ", " + localDate.substring(11, 15);
+    const askedAt = localDate.substring(16, 21);
+
     return (
       <React.Fragment>
         <table>
           <thead>
             <tr>
               <th>Vote</th>
-              <th>Title</th>
+              <th>{this.state.question.title}</th>
               <th>
-                Answers
+                {this.state.question.answers.length} Answers
                 <br />
-                Views
+                {this.state.question.views} Views
                 <br />
-                Votes
+                ? Votes
                 <br />
               </th>
             </tr>
@@ -35,20 +49,32 @@ export default class QuestionTable extends React.Component {
           <tbody>
             <tr>
               <td className="leftData">
-                <div>Tags</div>
+                <div>
+                  <DataTableRowTags
+                    tags={this.state.question.tags}
+                  ></DataTableRowTags>
+                </div>
               </td>
-              <td className="centerData">Text</td>
+              <td className="centerData">{this.state.question.text}</td>
               <td className="rightData">
-                Asked By
+                Asked By {this.state.question.asked_by}
                 <br />
-                On
+                On {askedOn}
                 <br />
-                At
+                At {askedAt}
                 <br />
               </td>
             </tr>
-            <div>Comment</div>
-            <div>Rows</div>
+            <tr>
+              <td>
+                <div>Comment Rows</div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div>Answer Rows</div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </React.Fragment>

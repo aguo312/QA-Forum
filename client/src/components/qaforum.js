@@ -11,6 +11,7 @@ import QuestionForm from "./QuestionForm";
 import AnswerForm from "./AnswerForm";
 import EditForm from "./EditForm";
 import ErrorMessage from "./ErrorMessage";
+import QuestionTable from "./QuestionTable";
 
 axios.defaults.withCredentials = true;
 
@@ -25,6 +26,7 @@ export default class QAForum extends React.Component {
       showQuestionsTab: false,
       showTagsTab: false,
       showProfileTab: false,
+      showQuestionInfo: { value: false, qid: "" },
       showQuestionForm: false,
       showAnswerForm: false,
       showEditForm: false,
@@ -39,6 +41,7 @@ export default class QAForum extends React.Component {
     this.handleClickProfileTab = this.handleClickProfileTab.bind(this);
     this.handleClickAskQuestion = this.handleClickAskQuestion.bind(this);
     this.handleSearchTextEnter = this.handleSearchTextEnter.bind(this);
+    this.handleClickQuestionInfo = this.handleClickQuestionInfo.bind(this);
     this.handleLoggedIn = this.handleLoggedIn.bind(this);
     this.handleClickLogOut = this.handleClickLogOut.bind(this);
     this.handleErrorMsg = this.handleErrorMsg.bind(this);
@@ -101,6 +104,7 @@ export default class QAForum extends React.Component {
       showTagsTab: false,
       showProfileTab: false,
       showQuestionForm: false,
+      showQuestionInfo: { value: false },
     });
   }
 
@@ -111,6 +115,7 @@ export default class QAForum extends React.Component {
       showTagsTab: true,
       showProfileTab: false,
       showQuestionForm: false,
+      showQuestionInfo: { value: false },
     });
   }
 
@@ -121,6 +126,7 @@ export default class QAForum extends React.Component {
       showTagsTab: false,
       showProfileTab: true,
       showQuestionForm: false,
+      showQuestionInfo: { value: false },
     });
   }
 
@@ -131,6 +137,7 @@ export default class QAForum extends React.Component {
       showTagsTab: false,
       showProfileTab: false,
       showQuestionForm: true,
+      showQuestionInfo: { value: false },
     });
   }
 
@@ -142,6 +149,14 @@ export default class QAForum extends React.Component {
       showTagsTab: false,
       showProfileTab: false,
       showQuestionForm: false,
+      showQuestionInfo: { value: false },
+    });
+  }
+
+  handleClickQuestionInfo(qid) {
+    this.setState({
+      showQuestionsTab: false,
+      showQuestionInfo: { value: true, qid: qid },
     });
   }
 
@@ -242,6 +257,7 @@ export default class QAForum extends React.Component {
         return (
           <DataTable
             onAskQuestionClick={this.handleClickAskQuestion}
+            onQuestionInfoClick={this.handleClickQuestionInfo}
           ></DataTable>
         );
       }
@@ -256,6 +272,15 @@ export default class QAForum extends React.Component {
     const profileActive = () => {
       if (this.state.showProfileTab) {
         return <Profile></Profile>;
+      }
+    };
+
+    // Question Info
+    const questionInfoActive = () => {
+      if (this.state.showQuestionInfo.value) {
+        return (
+          <QuestionTable qid={this.state.showQuestionInfo.qid}></QuestionTable>
+        );
       }
     };
 
@@ -303,6 +328,7 @@ export default class QAForum extends React.Component {
           {questionsActive()}
           {tagsActive()}
           {profileActive()}
+          {questionInfoActive()}
         </div>
         {loginFormActive()}
         {registerFormActive()}

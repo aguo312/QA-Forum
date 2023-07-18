@@ -8,11 +8,17 @@ axios.defaults.withCredentials = true;
 export default class DataTableRow extends React.Component {
   constructor(props) {
     super(props);
-    this.handleClickOpenQuestion = this.handleClickOpenQuestion.bind(this);
+    this.handleClickOpenQuestionInfo =
+      this.handleClickOpenQuestionInfo.bind(this);
   }
 
-  handleClickOpenQuestion() {
+  handleClickOpenQuestionInfo() {
     console.log("open question info");
+    axios
+      .put("http://localhost:8000/questionclick/" + this.props.question._id)
+      .then((res) => {
+        this.props.onQuestionInfoClick(this.props.question._id);
+      });
   }
 
   render() {
@@ -29,7 +35,7 @@ export default class DataTableRow extends React.Component {
           {0} Votes <br />
         </td>
         <td className="centerData">
-          <button onClick={this.handleClickOpenQuestion}>
+          <button onClick={this.handleClickOpenQuestionInfo}>
             {this.props.question.title}
           </button>
           <div>{this.props.question.summary}</div>

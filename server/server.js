@@ -125,9 +125,6 @@ app.post("/addtags", async (req, res) => {
 
 app.get("/tags", async (req, res) => {
   const tagData = await Tag.find({});
-  // const existingTags = tagData.map((tagObj) => {
-  //   return tagObj.name;
-  // });
   res.send(tagData);
 });
 
@@ -140,4 +137,19 @@ app.post("/addquestion", async (req, res) => {
 app.get("/userandquestions", async (req, res) => {
   const questionData = await Question.find({}).populate("tags");
   res.send([req.session, questionData]);
+});
+
+app.put("/questionclick/:qid", async (req, res) => {
+  await Question.findByIdAndUpdate(
+    { _id: req.params.qid },
+    { $inc: { views: 1 } }
+  );
+  res.send();
+});
+
+app.get("/questions/:qid", async (req, res) => {
+  const question = await Question.findOne({ _id: req.params.qid }).populate(
+    "tags"
+  );
+  res.send(question);
 });
