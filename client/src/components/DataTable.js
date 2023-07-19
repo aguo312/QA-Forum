@@ -36,15 +36,52 @@ export default class DataTable extends React.Component {
 
   render() {
     const rows = [];
-    Array.from(this.state.questions).forEach((questionObject) => {
-      rows.push(
-        <DataTableRow
-          key={questionObject._id}
-          question={questionObject}
-          onQuestionInfoClick={this.handleClickQuestionInfo}
-        ></DataTableRow>
-      );
-    });
+    const searchedQuestions = [];
+    if (this.props.searchText.value) {
+      const searchTargets = this.props.searchText.search
+        .toLowerCase()
+        .split(" ");
+      Array.from(this.state.questions).forEach((questionObject) => {
+        const questionTitle = questionObject.title.toLowerCase().split(" ");
+        const questionSummary = questionObject.summary.toLowerCase().split(" ");
+        const questionText = questionObject.text.toLowerCase().split(" ");
+        const questionTags = questionObject.tags.map((tagObject) => {
+          return "[" + tagObject.name + "]";
+        });
+        const questionWordAndTag = questionTitle
+          .concat(questionSummary)
+          .concat(questionText)
+          .concat(questionTags);
+        if (
+          searchTargets.filter((target) => {
+            return questionWordAndTag.includes(target);
+          }).length > 0
+        ) {
+          searchedQuestions.push(questionObject);
+        }
+      });
+    }
+    if (this.props.searchText.value) {
+      searchedQuestions.forEach((questionObject) => {
+        rows.push(
+          <DataTableRow
+            key={questionObject._id}
+            question={questionObject}
+            onQuestionInfoClick={this.handleClickQuestionInfo}
+          ></DataTableRow>
+        );
+      });
+    } else {
+      Array.from(this.state.questions).forEach((questionObject) => {
+        rows.push(
+          <DataTableRow
+            key={questionObject._id}
+            question={questionObject}
+            onQuestionInfoClick={this.handleClickQuestionInfo}
+          ></DataTableRow>
+        );
+      });
+    }
 
     if (rows.length === 0) {
       rows.push(
@@ -55,6 +92,16 @@ export default class DataTable extends React.Component {
         </tr>
       );
     }
+
+    const numQuestions = this.props.searchText.value
+      ? searchedQuestions.length
+      : this.state.questions.length;
+
+    const tableTitle = this.props.searchText.value
+      ? this.props.searchText.tagsOnly
+        ? "Questions tagged " + this.props.searchText.search
+        : "Search Results"
+      : "All Questions";
 
     const askQuestionButtonActive = () => {
       if (!this.state.user.guest) {
@@ -73,14 +120,12 @@ export default class DataTable extends React.Component {
         <table id="questions">
           <thead>
             <tr>
-              <th>{this.state.questions.length} Questions</th>
-              {/* <th>{tableTitle}</th> */}
-              <th>Title</th>
+              <th>{numQuestions} Questions</th>
+              <th>{tableTitle}</th>
               <th>{askQuestionButtonActive()}</th>
             </tr>
           </thead>
           <tbody>{rows}</tbody>
-          {/* <tbody></tbody> */}
         </table>
       </React.Fragment>
     );

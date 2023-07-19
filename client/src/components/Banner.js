@@ -69,11 +69,17 @@ export default class Banner extends React.Component {
     if (!this.state.user.guest) {
       username = this.state.user.username + "'s Profile";
     }
-    let questionsClass = this.props.tabs[0] ? "currentTab" : "notCurrentTab";
-    let tagsClass = this.props.tabs[1] ? "currentTab" : "notCurrentTab";
+    let questionsClass =
+      this.props.tabs[0] && !this.props.searchText.value
+        ? "currentTab"
+        : "notCurrentTab";
+    let tagsClass =
+      this.props.tabs[1] && !this.props.searchText.value
+        ? "currentTab"
+        : "notCurrentTab";
     let profileClass = this.state.user.guest
       ? "notCurrentTab2"
-      : this.props.tabs[2]
+      : this.props.tabs[2] && !this.props.searchText.value
       ? "currentTab"
       : "notCurrentTab";
     const askQuestionActive = () => {

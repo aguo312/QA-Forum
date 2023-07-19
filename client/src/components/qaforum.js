@@ -27,6 +27,7 @@ export default class QAForum extends React.Component {
       showTagsTab: false,
       showProfileTab: false,
       showQuestionInfo: { value: false, qid: "" },
+      searchText: { value: false, tagsOnly: false, search: "" },
       showQuestionForm: false,
       showAnswerForm: false,
       showEditForm: false,
@@ -106,6 +107,7 @@ export default class QAForum extends React.Component {
       showProfileTab: false,
       showQuestionForm: false,
       showQuestionInfo: { value: false },
+      searchText: { value: false, tagsOnly: false, search: "" },
     });
   }
 
@@ -154,7 +156,7 @@ export default class QAForum extends React.Component {
     this.setState({
       showBanner: true,
       searchText: { value: true, tagsOnly: false, search: search },
-      showQuestionsTab: false,
+      showQuestionsTab: true,
       showTagsTab: false,
       showProfileTab: false,
       showQuestionForm: false,
@@ -255,6 +257,7 @@ export default class QAForum extends React.Component {
               this.state.showTagsTab,
               this.state.showProfileTab,
             ]}
+            searchText={this.state.searchText}
           ></Banner>
         );
       }
@@ -267,6 +270,7 @@ export default class QAForum extends React.Component {
           <DataTable
             onAskQuestionClick={this.handleClickAskQuestion}
             onQuestionInfoClick={this.handleClickQuestionInfo}
+            searchText={this.state.searchText}
           ></DataTable>
         );
       }
