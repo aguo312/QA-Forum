@@ -10,6 +10,7 @@ export default class QuestionTable extends React.Component {
     super(props);
     this.state = {
       question: { tags: [], answers: [] },
+      user: { guest: true },
     };
   }
 
@@ -17,6 +18,7 @@ export default class QuestionTable extends React.Component {
     axios
       .get("http://localhost:8000/questions/" + this.props.qid)
       .then((res) => {
+        // if (res.data[0].)
         this.setState({
           question: res.data,
         });
@@ -28,6 +30,22 @@ export default class QuestionTable extends React.Component {
     const askedOn =
       localDate.substring(4, 10) + ", " + localDate.substring(11, 15);
     const askedAt = localDate.substring(16, 21);
+
+    const answerQuestionButtonActive = () => {
+      if (this.state.user.guest) {
+        return (
+          <button onClick={this.props.onAnswerQuestionClick}>
+            Answer Question
+          </button>
+        );
+      } else {
+        return (
+          <button hidden={true} onClick={this.props.onAnswerQuestionClick}>
+            Answer Question
+          </button>
+        );
+      }
+    };
 
     return (
       <React.Fragment>
@@ -77,6 +95,8 @@ export default class QuestionTable extends React.Component {
             </tr>
           </tbody>
         </table>
+        <br />
+        <div className="answerFooter">{answerQuestionButtonActive()}</div>
       </React.Fragment>
     );
   }

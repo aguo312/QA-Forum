@@ -151,7 +151,7 @@ app.get("/questions/:qid", async (req, res) => {
   const question = await Question.findOne({ _id: req.params.qid }).populate(
     "tags"
   );
-  res.send(question);
+  res.send([req.session, question]);
 });
 
 app.get("/questions", async (req, res) => {
