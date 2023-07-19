@@ -67,12 +67,12 @@ export default class QuestionTable extends React.Component {
             </tr>
             <tr>
               <td>
-                <div>Comment Rows</div>
+                <div>Comments for this Question</div>
               </td>
             </tr>
             <tr>
               <td>
-                <div>Answer Rows</div>
+                <div>One Question Table Row (Answers and their Comments)</div>
               </td>
             </tr>
           </tbody>
