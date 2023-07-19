@@ -12,6 +12,7 @@ export default class TagsTableRow extends React.Component {
       questions: [],
     };
     this.handleSetTagName = this.handleSetTagName.bind(this);
+    this.handleClickSearchByTag = this.handleClickSearchByTag.bind(this);
   }
 
   componentDidMount() {
@@ -26,6 +27,10 @@ export default class TagsTableRow extends React.Component {
     this.setState({ tagName: "[" + e.currentTarget.id + "]" });
   }
 
+  handleClickSearchByTag() {
+    this.props.onSearchByTagClick(this.state.tagName);
+  }
+
   render() {
     const tagTable = [];
     for (let i = 0; i < this.props.tags.length; i += 3) {
@@ -37,7 +42,11 @@ export default class TagsTableRow extends React.Component {
             }).length;
             return (
               <td key={tagObj._id}>
-                <button id={tagObj.name} onMouseDown={this.handleSetTagName}>
+                <button
+                  id={tagObj.name}
+                  onMouseDown={this.handleSetTagName}
+                  onClick={this.handleClickSearchByTag}
+                >
                   {tagObj.name}
                 </button>
                 <div>{numQuestions} Questions</div>

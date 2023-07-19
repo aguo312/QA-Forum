@@ -147,6 +147,7 @@ export default class QAForum extends React.Component {
   handleClickSearchByTag(search) {
     this.setState({
       showBanner: true,
+      showQuestionsTab: true,
       showTagsTab: false,
       searchText: { value: true, tagsOnly: true, search: search },
     });
