@@ -156,7 +156,7 @@ export default class QAForum extends React.Component {
       showTagsTab: false,
       showProfileTab: false,
       showAnswerForm: true,
-      showQuestionInfo: { value: false },
+      showQuestionInfo: { value: false, qid: this.state.showQuestionInfo.qid },
     });
   }
 
@@ -338,7 +338,12 @@ export default class QAForum extends React.Component {
     // Answer Form
     const answerFormActive = () => {
       if (this.state.showAnswerForm) {
-        return <AnswerForm></AnswerForm>;
+        return (
+          <AnswerForm
+            qid={this.state.showQuestionInfo.qid}
+            onFormError={this.handleErrorMsg}
+          ></AnswerForm>
+        );
       }
     };
 

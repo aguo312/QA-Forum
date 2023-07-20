@@ -129,7 +129,7 @@ app.get("/tags", async (req, res) => {
 });
 
 app.post("/addquestion", async (req, res) => {
-  let qstnObj = new Question(req.body);
+  const qstnObj = new Question(req.body);
   qstnObj.save();
   res.send(qstnObj);
 });
@@ -158,3 +158,5 @@ app.get("/questions", async (req, res) => {
   const questionData = await Question.find({});
   res.send(questionData);
 });
+
+app.post("/addanswer", async (req, res) => {});
