@@ -18,10 +18,16 @@ export default class QuestionTable extends React.Component {
     axios
       .get("http://localhost:8000/questions/" + this.props.qid)
       .then((res) => {
-        // if (res.data[0].)
-        this.setState({
-          question: res.data,
-        });
+        if (res.data[0].loggedUser && !res.data[0].guest) {
+          this.setState({
+            user: res.data[0].loggedUser,
+            question: res.data[1],
+          });
+        } else {
+          this.setState({
+            question: res.data[1],
+          });
+        }
       });
   }
 
@@ -32,7 +38,7 @@ export default class QuestionTable extends React.Component {
     const askedAt = localDate.substring(16, 21);
 
     const answerQuestionButtonActive = () => {
-      if (this.state.user.guest) {
+      if (!this.state.user.guest) {
         return (
           <button onClick={this.props.onAnswerQuestionClick}>
             Answer Question

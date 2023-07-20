@@ -41,6 +41,7 @@ export default class QAForum extends React.Component {
     this.handleClickTagsTab = this.handleClickTagsTab.bind(this);
     this.handleClickProfileTab = this.handleClickProfileTab.bind(this);
     this.handleClickAskQuestion = this.handleClickAskQuestion.bind(this);
+    this.handleClickAnswerQuestion = this.handleClickAnswerQuestion.bind(this);
     this.handleClickSearchByTag = this.handleClickSearchByTag.bind(this);
     this.handleSearchTextEnter = this.handleSearchTextEnter.bind(this);
     this.handleClickQuestionInfo = this.handleClickQuestionInfo.bind(this);
@@ -106,6 +107,7 @@ export default class QAForum extends React.Component {
       showTagsTab: false,
       showProfileTab: false,
       showQuestionForm: false,
+      showAnswerForm: false,
       showQuestionInfo: { value: false },
       searchText: { value: false, tagsOnly: false, search: "" },
     });
@@ -118,6 +120,7 @@ export default class QAForum extends React.Component {
       showTagsTab: true,
       showProfileTab: false,
       showQuestionForm: false,
+      showAnswerForm: false,
       showQuestionInfo: { value: false },
     });
   }
@@ -129,6 +132,7 @@ export default class QAForum extends React.Component {
       showTagsTab: false,
       showProfileTab: true,
       showQuestionForm: false,
+      showAnswerForm: false,
       showQuestionInfo: { value: false },
     });
   }
@@ -140,6 +144,18 @@ export default class QAForum extends React.Component {
       showTagsTab: false,
       showProfileTab: false,
       showQuestionForm: true,
+      showAnswerForm: false,
+      showQuestionInfo: { value: false },
+    });
+  }
+
+  handleClickAnswerQuestion() {
+    this.setState({
+      showBanner: true,
+      showQuestionsTab: false,
+      showTagsTab: false,
+      showProfileTab: false,
+      showAnswerForm: true,
       showQuestionInfo: { value: false },
     });
   }
@@ -161,6 +177,7 @@ export default class QAForum extends React.Component {
       showTagsTab: false,
       showProfileTab: false,
       showQuestionForm: false,
+      showAnswerForm: false,
       showQuestionInfo: { value: false },
     });
   }
@@ -186,7 +203,7 @@ export default class QAForum extends React.Component {
       showLoginForm: false,
       showRegisterForm: false,
       showBanner: false,
-      // searchText: { value: false },
+      searchText: { value: false },
       showQuestionsTab: false,
       showTagsTab: false,
       showProfileTab: false,
@@ -298,7 +315,10 @@ export default class QAForum extends React.Component {
     const questionInfoActive = () => {
       if (this.state.showQuestionInfo.value) {
         return (
-          <QuestionTable qid={this.state.showQuestionInfo.qid}></QuestionTable>
+          <QuestionTable
+            qid={this.state.showQuestionInfo.qid}
+            onAnswerQuestionClick={this.handleClickAnswerQuestion}
+          ></QuestionTable>
         );
       }
     };
