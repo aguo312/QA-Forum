@@ -55,7 +55,6 @@ export default class DataTableRow extends React.Component {
 }
 
 DataTableRow.propTypes = {
-  key: PropTypes.string,
   question: PropTypes.object,
   onQuestionInfoClick: PropTypes.func,
 };

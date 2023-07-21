@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import DataTableRowTags from "./DataTableRowTags";
+import QuestionTableRow from "./QuestionTableRow";
 import PropTypes from "prop-types";
 
 axios.defaults.withCredentials = true;
@@ -36,6 +37,11 @@ export default class QuestionTable extends React.Component {
     const askedOn =
       localDate.substring(4, 10) + ", " + localDate.substring(11, 15);
     const askedAt = localDate.substring(16, 21);
+
+    const rows = [];
+    this.state.question.answers.forEach((aid) => {
+      rows.push(<QuestionTableRow key={aid} aid={aid}></QuestionTableRow>);
+    });
 
     const answerQuestionButtonActive = () => {
       if (!this.state.user.guest) {
@@ -94,11 +100,7 @@ export default class QuestionTable extends React.Component {
                 <div>Comments for this Question</div>
               </td>
             </tr>
-            <tr>
-              <td>
-                <div>One Question Table Row (Answers and their Comments)</div>
-              </td>
-            </tr>
+            {rows}
           </tbody>
         </table>
         <br />

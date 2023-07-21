@@ -168,3 +168,8 @@ app.post("/addanswer", async (req, res) => {
   );
   res.send();
 });
+
+app.get("/answers/:aid", async (req, res) => {
+  const answer = await Answer.findOne({ _id: req.params.aid });
+  res.send([req.session, answer]);
+});
