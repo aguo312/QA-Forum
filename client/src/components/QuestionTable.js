@@ -40,7 +40,7 @@ export default class QuestionTable extends React.Component {
 
     const rows = [];
     this.state.question.answers.forEach((aid) => {
-      rows.push(<QuestionTableRow key={aid} aid={aid}></QuestionTableRow>);
+      rows.unshift(<QuestionTableRow key={aid} aid={aid}></QuestionTableRow>);
     });
 
     const answerQuestionButtonActive = () => {
