@@ -140,20 +140,15 @@ export default class QuestionForm extends React.Component {
         };
         this.props.onFormError(error);
       } else {
-        console.log(newTagObjects);
         axios
           .post("http://localhost:8000/addtags", newTagObjects)
           .then((res) => {
-            // console.log(res.data);
             axios.get("http://localhost:8000/tags").then((res) => {
-              //   console.log(res.data);
-              const tagIds = res.data
-                .filter((tagObject) => {
-                  return tags.includes(tagObject.name);
-                })
-                .map((tagObject) => {
-                  return tagObject._id;
-                });
+              const tagIds = tags.map((tagName) => {
+                return res.data.find((tagObject) => {
+                  return tagObject.name == tagName;
+                })._id;
+              });
               const newQuestion = {
                 title: this.state.title,
                 summary: this.state.summary,

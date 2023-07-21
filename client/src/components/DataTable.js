@@ -57,13 +57,13 @@ export default class DataTable extends React.Component {
             return questionWordAndTag.includes(target);
           }).length > 0
         ) {
-          searchedQuestions.push(questionObject);
+          searchedQuestions.unshift(questionObject);
         }
       });
     }
     if (this.props.searchText.value) {
       searchedQuestions.forEach((questionObject) => {
-        rows.push(
+        rows.unshift(
           <DataTableRow
             key={questionObject._id}
             question={questionObject}
@@ -73,7 +73,7 @@ export default class DataTable extends React.Component {
       });
     } else {
       Array.from(this.state.questions).forEach((questionObject) => {
-        rows.push(
+        rows.unshift(
           <DataTableRow
             key={questionObject._id}
             question={questionObject}
