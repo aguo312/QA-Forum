@@ -49,3 +49,7 @@ export default class QuestionTableRow extends React.Component {
     );
   }
 }
+
+QuestionTableRow.propTypes = {
+  aid: PropTypes.string,
+};

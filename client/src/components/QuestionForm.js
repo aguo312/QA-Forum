@@ -160,7 +160,10 @@ export default class QuestionForm extends React.Component {
               axios
                 .post("http://localhost:8000/addquestion", newQuestion)
                 .then((res) => {
-                  const error = { value: false, errors: "" };
+                  const error = {
+                    value: false,
+                    errors: "",
+                  };
                   this.props.onFormError(error);
                   this.props.onQuestionsTabClick();
                 });
