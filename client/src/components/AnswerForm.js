@@ -63,6 +63,16 @@ export default class AnswerForm extends React.Component {
         ans_by: this.state.user.username,
         owner: this.state.user._id,
       };
+      axios
+        .post("http://localhost:8000/addanswer", [newAnswer, this.props.qid])
+        .then((res) => {
+          const error = {
+            value: false,
+            errors: "",
+          };
+          this.props.onFormError(error);
+          this.props.onQuestionInfoClick(this.props.qid);
+        });
     }
   }
 

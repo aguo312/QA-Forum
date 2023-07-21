@@ -186,6 +186,7 @@ export default class QAForum extends React.Component {
     this.setState({
       showQuestionsTab: false,
       showQuestionInfo: { value: true, qid: qid },
+      showAnswerForm: false,
     });
   }
 
@@ -341,6 +342,7 @@ export default class QAForum extends React.Component {
         return (
           <AnswerForm
             qid={this.state.showQuestionInfo.qid}
+            onQuestionInfoClick={this.handleClickQuestionInfo}
             onFormError={this.handleErrorMsg}
           ></AnswerForm>
         );

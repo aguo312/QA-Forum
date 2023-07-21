@@ -7,7 +7,7 @@ const MongoStore = require("connect-mongo");
 const bcrypt = require("bcrypt");
 const User = require("./models/users");
 const Question = require("./models/questions");
-// const Answer = require("./models/answers");
+const Answer = require("./models/answers");
 const Tag = require("./models/tags");
 // const Comment = require("./models/comments");
 
@@ -159,4 +159,12 @@ app.get("/questions", async (req, res) => {
   res.send(questionData);
 });
 
-app.post("/addanswer", async (req, res) => {});
+app.post("/addanswer", async (req, res) => {
+  const ansObj = new Answer(req.body[0]);
+  ansObj.save();
+  await Question.findByIdAndUpdate(
+    { _id: req.body[1] },
+    { $addToSet: { answers: ansObj._id } }
+  );
+  res.send();
+});
