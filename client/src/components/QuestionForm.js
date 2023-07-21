@@ -215,3 +215,8 @@ export default class QuestionForm extends React.Component {
     );
   }
 }
+
+QuestionForm.propTypes = {
+  onQuestionsTabClick: PropTypes.func,
+  onFormError: PropTypes.func,
+};

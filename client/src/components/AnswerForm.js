@@ -112,3 +112,9 @@ export default class AnswerForm extends React.Component {
     );
   }
 }
+
+AnswerForm.propTypes = {
+  qid: PropTypes.string,
+  onFormError: PropTypes.func,
+  onQuestionInfoClick: PropTypes.func,
+};

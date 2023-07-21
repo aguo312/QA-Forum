@@ -59,3 +59,8 @@ export default class TagsTableRow extends React.Component {
     return <React.Fragment>{tagTable}</React.Fragment>;
   }
 }
+
+TagsTableRow.propTypes = {
+  tags: PropTypes.array,
+  onSearchByTagClick: PropTypes.func,
+};

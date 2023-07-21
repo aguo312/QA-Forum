@@ -107,3 +107,8 @@ export default class QuestionTable extends React.Component {
     );
   }
 }
+
+QuestionTable.propTypes = {
+  qid: PropTypes.string,
+  onAnswerQuestionClick: PropTypes.func,
+};

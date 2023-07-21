@@ -131,3 +131,9 @@ export default class DataTable extends React.Component {
     );
   }
 }
+
+DataTable.propTypes = {
+  onAskQuestionClick: PropTypes.func,
+  onQuestionInfoClick: PropTypes.func,
+  searchText: PropTypes.object,
+};

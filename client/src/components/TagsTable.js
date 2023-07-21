@@ -53,3 +53,8 @@ export default class TagsTable extends React.Component {
     );
   }
 }
+
+TagsTable.propTypes = {
+  onAskQuestionClick: PropTypes.func,
+  onSearchByTagClick: PropTypes.func,
+};
