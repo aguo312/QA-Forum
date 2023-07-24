@@ -9,7 +9,7 @@ const User = require("./models/users");
 const Question = require("./models/questions");
 const Answer = require("./models/answers");
 const Tag = require("./models/tags");
-// const Comment = require("./models/comments");
+const Comment = require("./models/comments");
 
 let mongoose = require("mongoose");
 const e = require("express");
@@ -172,4 +172,8 @@ app.post("/addanswer", async (req, res) => {
 app.get("/answers/:aid", async (req, res) => {
   const answer = await Answer.findOne({ _id: req.params.aid });
   res.send([req.session, answer]);
+});
+
+app.get("/comments/:cid", async (req, res) => {
+  const comment = await Comment.findOne({ _id: req.params.aid });
 });
