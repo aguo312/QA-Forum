@@ -2,6 +2,8 @@ import React from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 
+axios.defaults.withCredentials = true;
+
 export default class CommentTableRow extends React.Component {
   constructor(prop) {
     super(props);
@@ -9,13 +11,13 @@ export default class CommentTableRow extends React.Component {
   }
 
   componentDidMount() {
-    // axios
-    //   .get("http://localhost:8000/comments/" + this.props.cid)
-    //   .then((res) => {
-    //     this.setState({
-    //       comment: res.data,
-    //     });
-    //   });
+    axios
+      .get("http://localhost:8000/comments/" + this.props.cid)
+      .then((res) => {
+        this.setState({
+          comment: res.data,
+        });
+      });
   }
 
   render() {

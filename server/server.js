@@ -176,4 +176,5 @@ app.get("/answers/:aid", async (req, res) => {
 
 app.get("/comments/:cid", async (req, res) => {
   const comment = await Comment.findOne({ _id: req.params.aid });
+  res.send(comment);
 });
