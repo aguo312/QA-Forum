@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import DataTableRowTags from "./DataTableRowTags";
 import QuestionTableRow from "./QuestionTableRow";
+import CommentTable from "./CommentTable";
 import PropTypes from "prop-types";
 
 axios.defaults.withCredentials = true;
@@ -95,11 +96,10 @@ export default class QuestionTable extends React.Component {
                 <br />
               </td>
             </tr>
-            <tr>
-              <td>
-                <div>Comments for this Question</div>
-              </td>
-            </tr>
+            <CommentTable
+              dataType="question"
+              did={this.state.question._id}
+            ></CommentTable>
             {rows}
           </tbody>
         </table>

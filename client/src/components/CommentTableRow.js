@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 axios.defaults.withCredentials = true;
 
 export default class CommentTableRow extends React.Component {
-  constructor(prop) {
+  constructor(props) {
     super(props);
     this.state = { comment: { text: "" } };
   }

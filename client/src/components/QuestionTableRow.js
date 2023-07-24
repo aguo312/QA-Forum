@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-
+import CommentTable from "./CommentTable";
 import PropTypes from "prop-types";
 
 axios.defaults.withCredentials = true;
@@ -33,19 +33,24 @@ export default class QuestionTableRow extends React.Component {
     const ansAt = localDate.substring(16, 21);
 
     return (
-      <tr>
-        <td className="leftData">Votes</td>
-        <td className="centerData">{this.state.answer.text}</td>
-        <td className="rightData">
-          Ans By {this.state.answer.ans_by}
-          <br />
-          On {ansOn}
-          <br />
-          At {ansAt}
-          <br />
-        </td>
-        <td>Comments for this Answer</td>
-      </tr>
+      <React.Fragment>
+        <tr>
+          <td className="leftData">Votes</td>
+          <td className="centerData">{this.state.answer.text}</td>
+          <td className="rightData">
+            Ans By {this.state.answer.ans_by}
+            <br />
+            On {ansOn}
+            <br />
+            At {ansAt}
+            <br />
+          </td>
+        </tr>
+        <CommentTable
+          dataType="answer"
+          did={this.state.answer._id}
+        ></CommentTable>
+      </React.Fragment>
     );
   }
 }

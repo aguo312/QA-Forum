@@ -13,14 +13,24 @@ export default class CommentTable extends React.Component {
     this.handleCommentEnter = this.handleCommentEnter.bind(this);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    axios.get("http://localhost:8000/userdata").then((res) => {
+      if (res.data.loggedUser && !res.data.guest) {
+        this.setState({
+          user: res.data.loggedUser,
+        });
+      }
+    });
+  }
 
   handleCommentChange(e) {
     this.setState({ comment: e.target.value });
   }
 
   handleCommentEnter(e) {
-    console.log("comment box enter");
+    if (e.keyCode === 13) {
+      console.log("comment box enter");
+    }
   }
 
   render() {
@@ -28,8 +38,9 @@ export default class CommentTable extends React.Component {
       if (!this.state.user.guest) {
         return (
           <React.Fragment>
-            Add comment:
+            {"Add comment: "}
             <input
+              size={30}
               placeholder="Press enter to add new comment ..."
               onChange={this.handleCommentChange}
               onKeyUp={this.handleCommentEnter}
@@ -42,12 +53,7 @@ export default class CommentTable extends React.Component {
     return (
       <React.Fragment>
         <tr>
-          <td colSpan={3}>
-            <table id="commentTable">
-              <br />
-              {commentBoxActive()}
-            </table>
-          </td>
+          <td colSpan={3}>{commentBoxActive()}</td>
         </tr>
       </React.Fragment>
     );
