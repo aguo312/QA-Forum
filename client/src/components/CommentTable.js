@@ -79,6 +79,7 @@ export default class CommentTable extends React.Component {
               errors: "",
             };
             this.props.onFormError(error);
+            this.props.onCommentEnter();
           });
       }
     }

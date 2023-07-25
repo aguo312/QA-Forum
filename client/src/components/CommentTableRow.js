@@ -21,7 +21,7 @@ export default class CommentTableRow extends React.Component {
   }
 
   render() {
-    const localDate = new Date(this.state.comment_date_time).toString();
+    const localDate = new Date(this.state.comment.comment_date_time).toString();
     const commentOn =
       localDate.substring(4, 10) + ", " + localDate.substring(11, 15);
     const commentAt = localDate.substring(16, 21);

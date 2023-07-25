@@ -14,6 +14,7 @@ export default class QuestionTable extends React.Component {
       question: { tags: [], answers: [] },
       user: { guest: true },
     };
+    this.handleEnterComment = this.handleEnterComment.bind(this);
   }
 
   componentDidMount() {
@@ -30,6 +31,16 @@ export default class QuestionTable extends React.Component {
             question: res.data[1],
           });
         }
+      });
+  }
+
+  handleEnterComment() {
+    axios
+      .get("http://localhost:8000/questions/" + this.props.qid)
+      .then((res) => {
+        this.setState({
+          question: res.data[1],
+        });
       });
   }
 
@@ -105,6 +116,7 @@ export default class QuestionTable extends React.Component {
             <CommentTable
               dataType="question"
               data={this.state.question}
+              onCommentEnter={this.handleEnterComment}
               onFormError={this.props.onFormError}
             ></CommentTable>
             {rows}
