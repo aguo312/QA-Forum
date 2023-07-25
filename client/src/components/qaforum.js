@@ -319,6 +319,7 @@ export default class QAForum extends React.Component {
           <QuestionTable
             qid={this.state.showQuestionInfo.qid}
             onAnswerQuestionClick={this.handleClickAnswerQuestion}
+            onFormError={this.handleErrorMsg}
           ></QuestionTable>
         );
       }

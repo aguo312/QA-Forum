@@ -48,7 +48,8 @@ export default class QuestionTableRow extends React.Component {
         </tr>
         <CommentTable
           dataType="answer"
-          did={this.state.answer._id}
+          data={this.state.answer}
+          onFormError={this.props.onFormError}
         ></CommentTable>
       </React.Fragment>
     );

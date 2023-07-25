@@ -148,9 +148,9 @@ app.put("/questionclick/:qid", async (req, res) => {
 });
 
 app.get("/questions/:qid", async (req, res) => {
-  const question = await Question.findOne({ _id: req.params.qid }).populate(
-    "tags"
-  );
+  const question = await Question.findOne({ _id: req.params.qid })
+    .populate("tags")
+    .populate("comments");
   res.send([req.session, question]);
 });
 
@@ -170,11 +170,35 @@ app.post("/addanswer", async (req, res) => {
 });
 
 app.get("/answers/:aid", async (req, res) => {
-  const answer = await Answer.findOne({ _id: req.params.aid });
+  const answer = await Answer.findOne({ _id: req.params.aid }).populate(
+    "comments"
+  );
   res.send([req.session, answer]);
 });
 
 app.get("/comments/:cid", async (req, res) => {
-  const comment = await Comment.findOne({ _id: req.params.aid });
+  const comment = await Comment.findOne({ _id: req.params.cid });
   res.send(comment);
+});
+
+app.get("/comments", async (req, res) => {
+  const commentData = await Comment.find({});
+  res.send([req.session, commentData]);
+});
+
+app.post("/addcomment", async (req, res) => {
+  const comObj = new Comment(req.body[0]);
+  comObj.save();
+  if (req.body[1] == "question") {
+    await Question.findByIdAndUpdate(
+      { _id: req.body[2] },
+      { $addToSet: { comments: comObj._id } }
+    );
+  } else if (req.body[1] == "answer") {
+    await Answer.findByIdAndUpdate(
+      { _id: req.body[2] },
+      { $addToSet: { comments: comObj._id } }
+    );
+  }
+  res.send();
 });

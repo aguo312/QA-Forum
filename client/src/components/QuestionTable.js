@@ -41,7 +41,13 @@ export default class QuestionTable extends React.Component {
 
     const rows = [];
     this.state.question.answers.forEach((aid) => {
-      rows.unshift(<QuestionTableRow key={aid} aid={aid}></QuestionTableRow>);
+      rows.unshift(
+        <QuestionTableRow
+          key={aid}
+          aid={aid}
+          onFormError={this.props.onFormError}
+        ></QuestionTableRow>
+      );
     });
 
     const answerQuestionButtonActive = () => {
@@ -98,7 +104,8 @@ export default class QuestionTable extends React.Component {
             </tr>
             <CommentTable
               dataType="question"
-              did={this.state.question._id}
+              data={this.state.question}
+              onFormError={this.props.onFormError}
             ></CommentTable>
             {rows}
           </tbody>
