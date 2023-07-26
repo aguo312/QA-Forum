@@ -202,3 +202,11 @@ app.post("/addcomment", async (req, res) => {
   }
   res.send();
 });
+
+app.get("/alldata/:uid", async (req, res) => {
+  const questions = await Question.find({ owner: req.params.uid });
+  const answers = await Answer.find({ owner: req.params.uid });
+  const tags = await Tag.find({ owner: req.params.uid });
+  const comments = await Comment.find({ owner: req.params.uid });
+  res.send([req.session, questions, answers, tags, comments]);
+});

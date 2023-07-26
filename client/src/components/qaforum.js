@@ -32,6 +32,7 @@ export default class QAForum extends React.Component {
       showAnswerForm: false,
       showEditForm: false,
       errorMsg: { value: false, errors: [] },
+      user: {},
     };
     this.handleClickLogin = this.handleClickLogin.bind(this);
     this.handleClickRegister = this.handleClickRegister.bind(this);
@@ -57,6 +58,7 @@ export default class QAForum extends React.Component {
           showWelcome: false,
           showBanner: true,
           showQuestionsTab: true,
+          user: res.data.loggedUser,
         });
       }
     });
@@ -308,7 +310,7 @@ export default class QAForum extends React.Component {
 
     const profileActive = () => {
       if (this.state.showProfileTab) {
-        return <Profile></Profile>;
+        return <Profile uid={this.state.user._id}></Profile>;
       }
     };
 

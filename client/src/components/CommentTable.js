@@ -124,3 +124,10 @@ export default class CommentTable extends React.Component {
     );
   }
 }
+
+CommentTable.propTypes = {
+  dataType: PropTypes.string,
+  data: PropTypes.object,
+  onCommentEnter: PropTypes.func,
+  onFormError: PropTypes.func,
+};
