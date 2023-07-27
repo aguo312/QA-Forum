@@ -14,6 +14,10 @@ export default class Profile extends React.Component {
       comments: [],
       user: {},
     };
+    this.handleClickDeleteQuestion = this.handleClickDeleteQuestion.bind(this);
+    this.handleClickDeleteAnswer = this.handleClickDeleteAnswer.bind(this);
+    this.handleClickDeleteTag = this.handleClickDeleteTag.bind(this);
+    this.handleClickDeleteComment = this.handleClickDeleteComment.bind(this);
   }
 
   componentDidMount() {
@@ -34,6 +38,30 @@ export default class Profile extends React.Component {
           comments: res.data[4],
         });
       }
+    });
+  }
+
+  handleClickDeleteQuestion(qid) {
+    axios.delete("http://localhost:8000/deletequestion/" + qid).then((res) => {
+      console.log("deleted question");
+    });
+  }
+
+  handleClickDeleteAnswer(aid) {
+    axios.delete("http://localhost:8000/deleteanswer/" + aid).then((res) => {
+      console.log("deleted answer");
+    });
+  }
+
+  handleClickDeleteTag(tid) {
+    axios.delete("http://localhost:8000/deletetag/" + tid).then((res) => {
+      console.log("deleted tag");
+    });
+  }
+
+  handleClickDeleteComment(cid) {
+    axios.delete("http://localhost:8000/deletecomment/" + cid).then((res) => {
+      console.log("deleted comment");
     });
   }
 
@@ -62,20 +90,98 @@ export default class Profile extends React.Component {
         questionsRow.unshift(
           <tr key={questionObject._id}>
             <td>{questionObject.title}</td>
-            <td>Edit</td>
+            <td>
+              <button>Edit</button>
+              <button
+                onClick={() =>
+                  this.handleClickDeleteQuestion(questionObject._id)
+                }
+              >
+                Delete
+              </button>
+            </td>
           </tr>
         );
       });
+      if (this.state.questions.length === 0) {
+        questionsRow.push(
+          <tr key={"none"}>
+            <td colSpan={2}>No Questions Created</td>
+          </tr>
+        );
+      }
 
       const answersRow = [];
       Array.from(this.state.answers).forEach((answersObject) => {
         answersRow.unshift(
           <tr key={answersObject._id}>
             <td>{answersObject.text}</td>
-            <td>Edit</td>
+            <td>
+              <button>Edit</button>
+              <button
+                onClick={() => this.handleClickDeleteAnswer(answersObject._id)}
+              >
+                Delete
+              </button>
+            </td>
           </tr>
         );
       });
+      if (this.state.answers.length === 0) {
+        answersRow.push(
+          <tr key={"none"}>
+            <td colSpan={2}>No Answers Created</td>
+          </tr>
+        );
+      }
+
+      const tagsRow = [];
+      Array.from(this.state.tags).forEach((tagsObject) => {
+        tagsRow.unshift(
+          <tr key={tagsObject._id}>
+            <td>{tagsObject.name}</td>
+            <td>
+              <button>Edit</button>
+              <button onClick={() => this.handleClickDeleteTag(tagsObject._id)}>
+                Delete
+              </button>
+            </td>
+          </tr>
+        );
+      });
+      if (this.state.tags.length === 0) {
+        tagsRow.push(
+          <tr key={"none"}>
+            <td colSpan={2}>No Tags Created</td>
+          </tr>
+        );
+      }
+
+      const commentsRow = [];
+      Array.from(this.state.comments).forEach((commentsObject) => {
+        commentsRow.unshift(
+          <tr key={commentsObject._id}>
+            <td>{commentsObject.text}</td>
+            <td>
+              <button>Edit</button>
+              <button
+                onClick={() =>
+                  this.handleClickDeleteComment(commentsObject._id)
+                }
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        );
+      });
+      if (this.state.comments.length === 0) {
+        commentsRow.push(
+          <tr key={"none"}>
+            <td colSpan={2}>No Comments Created</td>
+          </tr>
+        );
+      }
 
       return (
         <React.Fragment>
@@ -122,6 +228,48 @@ export default class Profile extends React.Component {
                 </td>
               </tr>
               {answersRow}
+            </tbody>
+          </table>
+          <br />
+          <table>
+            <thead>
+              <tr>
+                <td colSpan={2}>
+                  <h2>Created Tags: {this.state.tags.length}</h2>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <h3>Tag Name</h3>
+                </td>
+                <td>
+                  <h3>Edit</h3>
+                </td>
+              </tr>
+              {tagsRow}
+            </tbody>
+          </table>
+          <br />
+          <table>
+            <thead>
+              <tr>
+                <td colSpan={2}>
+                  <h2>Created Comments: {this.state.comments.length}</h2>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <h3>Comment Text</h3>
+                </td>
+                <td>
+                  <h3>Edit</h3>
+                </td>
+              </tr>
+              {commentsRow}
             </tbody>
           </table>
         </React.Fragment>

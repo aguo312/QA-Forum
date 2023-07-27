@@ -56,6 +56,13 @@ export default class TagsTableRow extends React.Component {
         </tr>
       );
     }
+    if (tagTable.length === 0) {
+      tagTable.push(
+        <tr key={"none"}>
+          <td colSpan={3}>No Tags Found</td>
+        </tr>
+      );
+    }
     return <React.Fragment>{tagTable}</React.Fragment>;
   }
 }

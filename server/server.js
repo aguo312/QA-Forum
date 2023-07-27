@@ -210,3 +210,39 @@ app.get("/alldata/:uid", async (req, res) => {
   const comments = await Comment.find({ owner: req.params.uid });
   res.send([req.session, questions, answers, tags, comments]);
 });
+
+app.delete("/deletequestion/:qid", async (req, res) => {
+  await Question.deleteOne({ _id: req.params.qid });
+  res.send();
+});
+
+app.delete("/deleteanswer/:aid", async (req, res) => {
+  await Answer.deleteOne({ _id: req.params.aid });
+  await Question.updateMany(
+    { answers: { $in: req.params.aid } },
+    { $pull: { answers: { $in: req.params.aid } } }
+  );
+  res.send();
+});
+
+app.delete("/deletetag/:tid", async (req, res) => {
+  await Tag.deleteOne({ _id: req.params.tid });
+  await Question.updateMany(
+    { tags: { $in: req.params.tid } },
+    { $pull: { tags: { $in: req.params.tid } } }
+  );
+  res.send();
+});
+
+app.delete("/deletecomment/:cid", async (req, res) => {
+  await Comment.deleteOne({ _id: req.params.cid });
+  await Question.updateMany(
+    { comments: { $in: req.params.cid } },
+    { $pull: { comments: { $in: req.params.cid } } }
+  );
+  await Answer.updateMany(
+    { comments: { $in: req.params.cid } },
+    { $pull: { comments: { $in: req.params.cid } } }
+  );
+  res.send();
+});
